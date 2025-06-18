@@ -1,0 +1,66 @@
+.delete {
+  background-color: #db350b;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.done{
+    background-color: #31eb0c;
+    color: white;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.sortBtn{
+    display: flex;
+    align-items: center;
+    font-size: inherit;
+    font-weight: inherit;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.sortBtn > svg{
+    width: 25px;
+    height: 25px;
+}
+.delete:hover {
+  background-color: #d30d0d;
+}
+.done:hover{
+    background-color: #1ea004;
+}
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td:last-child {
+  text-align: center;
+}

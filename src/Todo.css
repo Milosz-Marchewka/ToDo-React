@@ -1,0 +1,11 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 2rem;
+}
+#root{
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
