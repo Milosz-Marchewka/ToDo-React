@@ -11,7 +11,8 @@ function TodoForm({addTodo}){
         const date = new Date(Date.now()).toUTCString();
         const status = false;
         addTodo({ task, description, status, date});
-        console.log({task, description, status, date});
+        setTask('');
+        setDescription('');
     };
 
     const handleTask = (e)=>{

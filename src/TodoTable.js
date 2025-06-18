@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./TodoTable.css";
 
 function TodoTable({todos, setTodos}){
