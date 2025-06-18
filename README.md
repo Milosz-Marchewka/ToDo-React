@@ -1,1 +1,1 @@
-# First PBL project on my way to learning React.
+# First simple project for me to learn React
