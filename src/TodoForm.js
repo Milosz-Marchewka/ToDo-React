@@ -8,7 +8,7 @@ function TodoForm({addTodo}){
     const handleSubmit = (e)=>{
         e.preventDefault();
 
-        const date = new Date(Date.now()).toUTCString();
+        const date = new Date(Date.now()).getTime();
         const status = false;
         addTodo({ task, description, status, date});
         setTask('');

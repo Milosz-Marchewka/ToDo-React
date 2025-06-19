@@ -6,11 +6,7 @@ import { useState, useEffect } from "react";
 function TodoTable({todos, setTodos}){
     const [deleteIndex, setDeleteIndex] = useState(0);
     const [showModal, setShowModal] = useState(false);
-    let sorted = [...todos].sort((a,b)=>a.status-b.status);
-
-    useEffect(()=>{
-        sorted = [...todos].sort((a,b)=>a.status-b.status);
-    }, [todos])
+    const sorted = [...todos].sort((a,b)=>a.status-b.status);
 
     const deleteRow = (indexDelete)=>{
         const updatedTodos = todos.filter((_, index)=> index !== indexDelete);
@@ -33,45 +29,45 @@ function TodoTable({todos, setTodos}){
     console.log(sorted);
 
     return(
-        <>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Task</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>
-                            Status
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                    sorted.map((todo, index)=>(
-                        <tr key={index}>
-                            <td>{todo.task}</td>
-                            <td>{todo.description}</td>
-                            <td>{todo.date}</td>
-                            <td>{<Status status={todo.status}/>}</td>
-                            <td className="controls">
-                                <button onClick={()=>handleDelete(index)} className='delete'>Delete</button>
-                                {(!todo.status) ? <button onClick={()=>setDone(index)} className = "done">Done!</button> : ''}
-                            </td>
+        (todos.length > 0) && 
+            <>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>
+                                Status
+                            </th>
+                            <th></th>
                         </tr>
-                    ))
-                    }
-                </tbody>
-            </table>
-            {
-                showModal && 
-                <DeleteModal
-                    onCancel={()=>setShowModal(false)}
-                    onDelete={()=>{deleteRow(deleteIndex); setShowModal(false)}}
-                />
-            }
-        </>
-        
+                    </thead>
+                    <tbody>
+                        {
+                        sorted.map((todo, index)=>(
+                            <tr key={index}>
+                                <td>{todo.task}</td>
+                                <td>{todo.description}</td>
+                                <td>{new Date(todo.date).toUTCString()}</td>
+                                <td>{<Status status={todo.status}/>}</td>
+                                <td className="controls">
+                                    <button onClick={()=>handleDelete(index)} className='delete'>Delete</button>
+                                    {(!todo.status) ? <button onClick={()=>setDone(index)} className = "done">Done!</button> : ''}
+                                </td>
+                            </tr>
+                        ))
+                        }
+                    </tbody>
+                </table>
+                {
+                    showModal && 
+                    <DeleteModal
+                        onCancel={()=>setShowModal(false)}
+                        onDelete={()=>{deleteRow(deleteIndex); setShowModal(false)}}
+                    />
+                }
+            </>   
     )
 }
 
