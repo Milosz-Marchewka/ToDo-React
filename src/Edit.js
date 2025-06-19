@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./Edit.css";
 
 function Edit({todos, editIndex, setTodos, onCancel, closeModal}){
-    const [task, setTask] = useState("");
-    const [description, setDescription] = useState("");
+    const [task, setTask] = useState(todos[editIndex].task);
+    const [description, setDescription] = useState(todos[editIndex].description);
     
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -36,8 +36,8 @@ function Edit({todos, editIndex, setTodos, onCancel, closeModal}){
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={task} onChange={handleTask} placeholder="Task name"/><br/>
                     <textarea value={description} onChange={handleDesc} placeholder="Description"/><br/>
-                    <button type="submit" className="form-button">Add</button>
-                    <button onClick={onCancel}>Cancel</button>
+                    <button type="submit" className="form-button">Confirm</button>
+                    <button onClick={onCancel} className='modal-cancel'>Cancel</button>
                 </form>
             </div>
         </div>
