@@ -1,7 +1,7 @@
 import "./TodoTable.css";
 import DeleteModal from "./DeleteModal";
 import Status from "./Status";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function TodoTable({todos, setTodos}){
     const [deleteIndex, setDeleteIndex] = useState(0);
@@ -26,7 +26,6 @@ function TodoTable({todos, setTodos}){
         setShowModal(true);
     }
 
-    console.log(sorted);
 
     return(
         (todos.length > 0) && 

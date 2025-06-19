@@ -1,5 +1,6 @@
 import TodoForm from "./TodoForm"
 import TodoTable from "./TodoTable";
+import ClearLocal from "./ClearLocal";
 import "./Todo.css";
 import { useState } from "react";
 
@@ -19,6 +20,7 @@ function Todo(){
             <h1>To-do List</h1>
             <TodoForm addTodo={addTodo}/>
             <TodoTable todos={todos} setTodos={setTodos}/>
+            <ClearLocal todos={todos} setTodos={setTodos}/>
         </>
     )
 }
