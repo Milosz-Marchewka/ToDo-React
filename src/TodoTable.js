@@ -76,14 +76,14 @@ function TodoTable({todos, setTodos}){
         let updatedTodos;
         if(!isSortedByCreateDate){
             updatedTodos = [...todos].sort((a,b)=>a.status-b.status);
-            setIsSortedByCreateDate(true);
+            setIsSortedByStatus(true);
             setIsSortedByDueDate(false);
-            setIsSortedByStatus(false);
+            setIsSortedByCreateDate(false);
         } else {
             updatedTodos = [...todos].reverse();
-            setIsSortedByCreateDate(false);
+            setIsSortedByStatus(true);
             setIsSortedByDueDate(false);
-            setIsSortedByStatus(false);
+            setIsSortedByCreateDate(false);
         }
         setTodos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
