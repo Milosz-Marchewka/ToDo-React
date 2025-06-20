@@ -2,16 +2,24 @@ import "./TodoTable.css";
 import DeleteModal from "./DeleteModal";
 import Status from "./Status";
 import Edit from "./Edit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function TodoTable({todos, setTodos}){
+    // indice variables
     const [deleteIndex, setDeleteIndex] = useState(0);
     const [editIndex, setEditIndex] = useState(0);
+    // edit and delete modal variables
     const [showModal, setShowModal] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    // sorted variables
     const [isSortedByDueDate, setIsSortedByDueDate] = useState(false);
     const [isSortedByCreateDate, setIsSortedByCreateDate] = useState(false);
-    const [isSortedByStatus, setIsSortedByStatus] = useState(false);
+    // sorted via status by default
+    const [isSortedByStatus, setIsSortedByStatus] = useState(true);
+    useEffect(()=>{
+        handleSortByStatus()
+    }, []);    
+
     const sortSvgs = {
         up: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 15L12 10L17 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -88,7 +96,6 @@ function TodoTable({todos, setTodos}){
         setTodos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
     }
-
     return(
         (todos.length > 0) && 
             <>
