@@ -74,7 +74,7 @@ function TodoTable({todos, setTodos}){
     }
     const handleSortByStatus = ()=>{
         let updatedTodos;
-        if(!isSortedByCreateDate){
+        if(!isSortedByStatus){
             updatedTodos = [...todos].sort((a,b)=>a.status-b.status);
             setIsSortedByStatus(true);
             setIsSortedByDueDate(false);
