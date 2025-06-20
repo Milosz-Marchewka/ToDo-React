@@ -1,6 +1,6 @@
 import "./TodoForm.css";
 import EmptyPopup from "./EmptyPopup";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function TodoForm({addTodo}){
     const [task, setTask] = useState("");
@@ -8,6 +8,13 @@ function TodoForm({addTodo}){
     const [dueDate, setDueDate] = useState(toDateTimeLocalString());
     const [editedDate, setEditedDate] = useState(false);
     const [showEmpty, setShowEmpty] = useState(false);
+    const [showDateErr, setShowDateErr] = useState(false);
+    const dateRef = useRef(null);
+    // blur causes the native datetime picker to hide
+    // so it's not over the EmptyPopup
+    const closeDate = ()=>{
+        if(dateRef.current) dateRef.current.blur();
+    }
 
     function toDateTimeLocalString(date = new Date()){
         const pad = (num)=>num.toString().padStart(2,'0');
@@ -41,8 +48,14 @@ function TodoForm({addTodo}){
         setDescription(e.target.value);
     }
     const handleDueDate = (e)=>{
-        setDueDate(e.target.value);
-        setEditedDate(true);
+        if(new Date(e.target.value) >= new Date(toDateTimeLocalString())){
+            setDueDate(e.target.value);
+            setEditedDate(true);
+        } else {
+            setShowDateErr(true);
+            setDueDate(toDateTimeLocalString());
+            closeDate();
+        }
     }
 
     // updating the time input value 
@@ -51,7 +64,7 @@ function TodoForm({addTodo}){
     useEffect(()=>{
         const interval = setInterval(()=>{
             if(!editedDate){
-                if(editedDate != toDateTimeLocalString()){
+                if(editedDate !== toDateTimeLocalString()){
                     setDueDate(toDateTimeLocalString());
                 }
             }
@@ -66,12 +79,20 @@ function TodoForm({addTodo}){
                 <input type="text" value={task} onChange={handleTask} placeholder="Task name"/>
                 <textarea value={description} onChange={handleTextarea} placeholder="Description"/>
                 <label>Due date <button type='button' className='resetDateBtn' onClick={()=>{setDueDate(toDateTimeLocalString()); setEditedDate(false)}}>Current</button></label>
-                <input type="datetime-local" value={dueDate} onChange={handleDueDate} />
+                <input type="datetime-local" value={dueDate} onChange={handleDueDate} ref={dateRef}/>
                 <button type="submit" className="form-button">Add</button>
             </form>
             { showEmpty &&
                 <EmptyPopup
+                    textContent="Please enter atleast the task name."
                     onClose={()=>setShowEmpty(false)}
+                />
+            }
+            { showDateErr &&
+                <EmptyPopup
+                    id = "dateErr"
+                    textContent="You can't select the due date to be in the past."
+                    onClose={()=>setShowDateErr(false)}
                 />
             }
         </>

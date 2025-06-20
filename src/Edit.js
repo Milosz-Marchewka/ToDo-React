@@ -36,8 +36,10 @@ function Edit({todos, editIndex, setTodos, onCancel, closeModal}){
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={task} onChange={handleTask} placeholder="Task name"/><br/>
                     <textarea value={description} onChange={handleDesc} placeholder="Description"/><br/>
-                    <button type="submit" className="form-button">Confirm</button>
-                    <button onClick={onCancel} className='modal-cancel'>Cancel</button>
+                    <div className="edit-buttons">
+                        <button onClick={onCancel} className='modal-cancel'>Cancel</button>
+                        <button type="submit" className="form-button">Confirm</button>
+                    </div>
                 </form>
             </div>
         </div>

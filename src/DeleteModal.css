@@ -34,6 +34,7 @@
 .modal-cancel {
   background-color: #e0e0e0;
   color: #333;
+  width: 6rem;
 }
 
 .modal-cancel:hover {
