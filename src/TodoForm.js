@@ -65,7 +65,7 @@ function TodoForm({addTodo}){
             <form onSubmit={handleSubmit}>
                 <input type="text" value={task} onChange={handleTask} placeholder="Task name"/>
                 <textarea value={description} onChange={handleTextarea} placeholder="Description"/>
-                <label>Due date</label>
+                <label>Due date <button type='button' className='resetDateBtn' onClick={()=>{setDueDate(toDateTimeLocalString()); setEditedDate(false)}}>Current</button></label>
                 <input type="datetime-local" value={dueDate} onChange={handleDueDate} />
                 <button type="submit" className="form-button">Add</button>
             </form>

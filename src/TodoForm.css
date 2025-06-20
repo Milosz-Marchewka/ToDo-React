@@ -13,6 +13,7 @@ label{
   margin-top: 1rem;
   padding-left: 10px;
   font-family: inherit;
+  font-size: 1.1rem;
 }
 input,
 textarea{
@@ -64,4 +65,18 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 .form-button:hover {
   background-color: #45a049;
+}
+.resetDateBtn{
+  background-color: #6b7280;;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 6rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  margin-left: 1rem;
+}
+.resetDateBtn:hover{
+  background-color: #4d525e;
 }
