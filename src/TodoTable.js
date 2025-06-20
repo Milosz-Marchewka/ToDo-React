@@ -17,7 +17,9 @@ function TodoTable({todos, setTodos}){
     // sorted via status by default
     const [isSortedByStatus, setIsSortedByStatus] = useState(true);
     useEffect(()=>{
-        handleSortByStatus()
+        const updatedTodos = [...todos].sort((a,b)=>a.status-b.status);
+        setTodos(updatedTodos);
+        localStorage.setItem("todos", JSON.stringify(updatedTodos));
     }, []);    
 
     const sortSvgs = {
