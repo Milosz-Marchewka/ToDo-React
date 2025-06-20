@@ -1,11 +1,12 @@
 import "./TodoForm.css";
 import EmptyPopup from "./EmptyPopup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function TodoForm({addTodo}){
     const [task, setTask] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState(toDateTimeLocalString());
+    const [editedDate, setEditedDate] = useState(false);
     const [showEmpty, setShowEmpty] = useState(false);
 
     function toDateTimeLocalString(date = new Date()){
@@ -41,7 +42,23 @@ function TodoForm({addTodo}){
     }
     const handleDueDate = (e)=>{
         setDueDate(e.target.value);
+        setEditedDate(true);
     }
+
+    // updating the time input value 
+    // if not edited every minute
+
+    useEffect(()=>{
+        const interval = setInterval(()=>{
+            if(!editedDate){
+                if(editedDate != toDateTimeLocalString()){
+                    setDueDate(toDateTimeLocalString());
+                }
+            }
+        },1000);
+
+        return ()=>clearInterval(interval);
+    },[editedDate]);
 
     return(
         <>
