@@ -4,7 +4,7 @@ import Status from "./Status";
 import Edit from "./Edit";
 import { useEffect, useState } from "react";
 
-function TodoTable({todos, setTodos}){
+function TodoTable({theme, todos, setTodos}){
     // indice variables
     const [deleteIndex, setDeleteIndex] = useState(0);
     const [editIndex, setEditIndex] = useState(0);
@@ -20,7 +20,7 @@ function TodoTable({todos, setTodos}){
         const updatedTodos = [...todos].sort((a,b)=>a.status-b.status);
         setTodos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    }, []);    
+    });    
 
     const sortSvgs = {
         up: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,31 +103,31 @@ function TodoTable({todos, setTodos}){
             <>
                 <table>
                     <thead>
-                        <tr>
+                        <tr style={{backgroundColor: theme.th}}>
                             <th>Task</th>
                             <th>Description</th>
                             <th>
                                 <div className="sortTh">
-                                    <button className="sortBtn" onClick={handleSortByDueDate}>Due date</button>
+                                    <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByDueDate}>Due date</button>
                                     {isSortedByDueDate ? sortSvgs.up : sortSvgs.down}
                                 </div>
                             </th>
                             <th>
                                 <div className="sortTh">
-                                    <button className="sortBtn" onClick={handleSortByCreateDate}>Date created</button>
+                                    <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByCreateDate}>Date created</button>
                                     {isSortedByCreateDate ? sortSvgs.up : sortSvgs.down}
                                 </div>
                             </th>
                             <th>
                                 <div className="sortTh">
-                                    <button className="sortBtn" onClick={handleSortByStatus}>Status</button>
+                                    <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByStatus}>Status</button>
                                     {isSortedByStatus ? sortSvgs.up : sortSvgs.down}
                                 </div>
                             </th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{backgroundColor: theme.secondary}}>
                         {
                         todos.map((todo, index)=>(
                             <tr key={index}>
@@ -137,9 +137,9 @@ function TodoTable({todos, setTodos}){
                                 <td>{new Date(todo.date).toLocaleString().slice(0,-3)}</td>
                                 <td>{<Status status={todo.status}/>}</td>
                                 <td className="controls">
-                                    {(!todo.status) ? <button onClick={()=>setDone(index)} className = "done">Done!</button> : ''}
-                                    <button onClick={()=>handleEdit(index)} className="edit">Edit</button>
-                                    <button onClick={()=>handleDelete(index)} className='delete'>Delete</button>
+                                    {(!todo.status) ? <button style={{backgroundColor: theme.buttons.add}} onClick={()=>setDone(index)} className = "done">Done!</button> : ''}
+                                    <button style={{backgroundColor: theme.buttons.edit}} onClick={()=>handleEdit(index)} className="edit">Edit</button>
+                                    <button style={{backgroundColor: theme.buttons.delete}} onClick={()=>handleDelete(index)} className='delete'>Delete</button>
                                 </td>
                             </tr>
                         ))

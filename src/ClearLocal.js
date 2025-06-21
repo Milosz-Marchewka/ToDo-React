@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./ClearLocal.css";
 import DeleteModal from "./DeleteModal";
 
-function ClearLocal({todos, setTodos}){
+function ClearLocal({theme, todos, setTodos}){
     const [showModal, setShowModal] = useState(false);
 
     const clear = ()=>{
@@ -14,7 +14,7 @@ function ClearLocal({todos, setTodos}){
     return(
         todos.length > 0 && (
             <>
-                <button className='clear-local' onClick={()=>setShowModal(true)}>Clear</button>
+                <button style={{backgroundColor: theme.buttons.delete}} className='clear-local' onClick={()=>setShowModal(true)}>Clear</button>
                 {showModal && <DeleteModal onCancel={()=>setShowModal(false)} onDelete={clear}/>}
             </> 
         )

@@ -2,7 +2,7 @@ import "./TodoForm.css";
 import EmptyPopup from "./EmptyPopup";
 import { useEffect, useState, useRef } from "react";
 
-function TodoForm({addTodo}){
+function TodoForm({theme, addTodo}){
     const [task, setTask] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState(toDateTimeLocalString());
@@ -75,10 +75,10 @@ function TodoForm({addTodo}){
 
     return(
         <>
-            <form onSubmit={handleSubmit}>
+            <form style={{backgroundColor: theme.primary, color: theme.text}} onSubmit={handleSubmit}>
                 <input type="text" value={task} onChange={handleTask} placeholder="Task name"/>
                 <textarea value={description} onChange={handleTextarea} placeholder="Description"/>
-                <label>Due date <button type='button' className='resetDateBtn' onClick={()=>{setDueDate(toDateTimeLocalString()); setEditedDate(false)}}>Current</button></label>
+                <label >Due date <button style={{backgroundColor: theme.buttons.reset, color: theme.text}} type='button' className='resetDateBtn' onClick={()=>{setDueDate(toDateTimeLocalString()); setEditedDate(false)}}>Current</button></label>
                 <input type="datetime-local" value={dueDate} onChange={handleDueDate} ref={dateRef}/>
                 <button type="submit" className="form-button">Add</button>
             </form>

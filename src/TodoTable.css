@@ -57,10 +57,9 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 
-th {
+/* th {
   background-color: #f2f2f2;
-}
-
+} */
 td:last-child {
   text-align: center;
 }
