@@ -1,6 +1,6 @@
 # Simple React To-Do App
 
-This is my first simple project built to learn React. I started this after about 2.5 hours of experimenting with the framework, and it helped me get comfortable with components, state management, and event handling.
+This is my first simple project built to learn React. I started this after about 2.5 hours of experimenting with the framework, and it helps me get comfortable with components, state management and other stuff that I will stumble upon while trying to create yet one more feature.
 
 ## Features
 
