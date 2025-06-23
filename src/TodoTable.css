@@ -77,3 +77,17 @@ td:last-child {
   display: flex;
   align-items: center;
 }
+
+th > button{
+  width: 3rem;
+  height: 3rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+th > button > svg{
+  width: 100%;
+  height: 100%;
+}

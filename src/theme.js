@@ -3,6 +3,7 @@ export const lightMode = {
     background: "#ebf1f1",
     primary: "#3498db",
     secondary: "#85c1e9",
+    popup: "#B68B6E",
     text: "#000000",
     buttons: {
         cancel: "#bec3c7",
@@ -18,6 +19,7 @@ export const darkMode = {
     background: "#2c3f50",
     primary: "#5dade2",
     secondary: "#2e86c1",
+    popup: "#497491",
     text: "#ffffff",
     buttons: {
         cancel: "#ebf1f1",
