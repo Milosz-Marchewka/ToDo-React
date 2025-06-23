@@ -6,6 +6,7 @@ function TodoForm({theme, addTodo}){
     const [task, setTask] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState(toDateTimeLocalString());
+    const [priority, setPriority] = useState(0);
     const [editedDate, setEditedDate] = useState(false);
     const [showEmpty, setShowEmpty] = useState(false);
     const [showDateErr, setShowDateErr] = useState(false);
@@ -32,7 +33,7 @@ function TodoForm({theme, addTodo}){
         const date = new Date().getTime();
         const status = false;
         if(task.trim().length > 0){
-            addTodo({ task, description, status, date, dueDate});
+            addTodo({ task, description, status, date, dueDate, priority});
             setTask('');
             setDescription('');
             setDueDate(toDateTimeLocalString());
@@ -58,6 +59,10 @@ function TodoForm({theme, addTodo}){
         }
     }
 
+    const handlePriority = (e)=>{
+        setPriority(Number(e.target.value));
+    }
+
     // updating the time input value 
     // if not edited every minute
 
@@ -80,6 +85,12 @@ function TodoForm({theme, addTodo}){
                 <textarea value={description} onChange={handleTextarea} placeholder="Description"/>
                 <label >Due date <button style={{backgroundColor: theme.buttons.reset, color: theme.text}} type='button' className='resetDateBtn' onClick={()=>{setDueDate(toDateTimeLocalString()); setEditedDate(false)}}>Current</button></label>
                 <input type="datetime-local" value={dueDate} onChange={handleDueDate} ref={dateRef}/>
+                <label>Priority</label>
+                <select value={priority} onChange={handlePriority}>
+                    <option value="0">Low</option>
+                    <option value="1">Medium</option>
+                    <option value="2">High</option>
+                </select>
                 <button type="submit" className="form-button">Add</button>
             </form>
             { showEmpty &&

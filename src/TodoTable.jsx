@@ -13,23 +13,42 @@ function TodoTable({theme, todos, setTodos}){
     const [showModal, setShowModal] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
-    const [filters, setFilters] = useState({status: {done: true, notdone: true}, dates:{upcoming: true, overdue: true}});
+    const [filters, setFilters] = useState({task: "", priority:{high: true, medium: true, low: true}, status: {done: true, notdone: true}, dates:{upcoming: true, overdue: true}});
     // sorted variables
     const [isSortedByDueDate, setIsSortedByDueDate] = useState(false);
     const [isSortedByCreateDate, setIsSortedByCreateDate] = useState(false);
-    // sorted via status by default
-    const [isSortedByStatus, setIsSortedByStatus] = useState(true);
+    const [isSortedByStatus, setIsSortedByStatus] = useState(false);
+    // sorted via priority by default
+    const [isSortedByPriority, setIsSortedByPriority] = useState(true);
     useEffect(()=>{
-        const updatedTodos = [...todos].sort((a,b)=>a.status-b.status);
+        const updatedTodos = [...todos].sort((a,b)=>a.priority-b.priority);
+        updatedTodos.reverse();
         setTodos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
     },[]);    
 
-    const sortSvgs = {
-        up: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    const priorityMap={
+        0: "low",
+        1: "medium",
+        2: "high"
+    }
+
+    const svgs = {
+        sort:{
+            up: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 15L12 10L17 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>,
-        down: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 10L12 15L17 10" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            down: <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 10L12 15L17 10" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+        },
+        status:{
+            done: <svg width="15px" height="15px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#00ff00"></circle> </g></svg>,
+            notdone:<svg width="15px" height="15px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#ff0000"></circle> </g></svg>
+        },
+        priority:{
+            2: <svg width="15px" height="15px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#e74c3c"></circle> </g></svg>,
+            1: <svg width="15px" height="15px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#f1c40f"></circle> </g></svg>,
+            0: <svg width="15px" height="15px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#2ecc71"></circle> </g></svg>
+        }
     }
 
     const deleteRow = (indexDelete)=>{
@@ -60,11 +79,13 @@ function TodoTable({theme, todos, setTodos}){
             setIsSortedByDueDate(true);
             setIsSortedByCreateDate(false);
             setIsSortedByStatus(false);
+            setIsSortedByPriority(false);
         } else {
             updatedTodos = [...todos].reverse();
             setIsSortedByDueDate(false);
             setIsSortedByCreateDate(false);
             setIsSortedByStatus(false);
+            setIsSortedByPriority(false);
         }
         setTodos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
@@ -76,11 +97,13 @@ function TodoTable({theme, todos, setTodos}){
             setIsSortedByCreateDate(true);
             setIsSortedByDueDate(false);
             setIsSortedByStatus(false);
+            setIsSortedByPriority(false);
         } else {
             updatedTodos = [...todos].reverse();
             setIsSortedByCreateDate(false);
             setIsSortedByDueDate(false);
             setIsSortedByStatus(false);
+            setIsSortedByPriority(false);
         }
         setTodos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
@@ -92,9 +115,30 @@ function TodoTable({theme, todos, setTodos}){
             setIsSortedByStatus(true);
             setIsSortedByDueDate(false);
             setIsSortedByCreateDate(false);
+            setIsSortedByPriority(false);
         } else {
             updatedTodos = [...todos].reverse();
-            setIsSortedByStatus(true);
+            setIsSortedByStatus(false);
+            setIsSortedByDueDate(false);
+            setIsSortedByCreateDate(false);
+            setIsSortedByPriority(false);
+        }
+        setTodos(updatedTodos);
+        localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    }
+
+    const handleSortByPriority = ()=>{
+        let updatedTodos;
+        if(!isSortedByPriority){
+            updatedTodos = [...todos].sort((a,b)=>a.priority-b.priority);
+            setIsSortedByPriority(true);
+            setIsSortedByStatus(false);
+            setIsSortedByDueDate(false);
+            setIsSortedByCreateDate(false);
+        } else {
+            updatedTodos = [...todos].reverse();
+            setIsSortedByPriority(false);
+            setIsSortedByStatus(false);
             setIsSortedByDueDate(false);
             setIsSortedByCreateDate(false);
         }
@@ -105,6 +149,8 @@ function TodoTable({theme, todos, setTodos}){
     const handleFilters = ()=>{
         setShowFilters(!showFilters);
     }
+
+    console.log(todos);
     return(
         (todos.length > 0) && 
             <>
@@ -116,19 +162,25 @@ function TodoTable({theme, todos, setTodos}){
                             <th>
                                 <div className="sortTh">
                                     <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByDueDate}>Due date</button>
-                                    {isSortedByDueDate ? sortSvgs.up : sortSvgs.down}
+                                    {isSortedByDueDate ? svgs.sort.up : svgs.sort.down}
                                 </div>
                             </th>
                             <th>
                                 <div className="sortTh">
                                     <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByCreateDate}>Date created</button>
-                                    {isSortedByCreateDate ? sortSvgs.up : sortSvgs.down}
+                                    {isSortedByCreateDate ? svgs.sort.up : svgs.sort.down}
+                                </div>
+                            </th>
+                            <th>
+                                <div className="sortTh">
+                                    <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByPriority}>Priority</button>
+                                    {isSortedByPriority ? svgs.sort.up : svgs.sort.down}
                                 </div>
                             </th>
                             <th>
                                 <div className="sortTh">
                                     <button style={{color: theme.text}} className="sortBtn" onClick={handleSortByStatus}>Status</button>
-                                    {isSortedByStatus ? sortSvgs.up : sortSvgs.down}
+                                    {isSortedByStatus ? svgs.sort.up : svgs.sort.down}
                                 </div>
                             </th>
                             <th>
@@ -147,6 +199,9 @@ function TodoTable({theme, todos, setTodos}){
                         {
                         todos
                             .filter(todo=>{
+                                // todo.priority
+                                const priority = filters.priority[(priorityMap[todo.priority])];
+
                                 // todo.status
                                 const status = 
                                     (todo.status && filters.status.done) || (!todo.status && filters.status.notdone);
@@ -160,7 +215,10 @@ function TodoTable({theme, todos, setTodos}){
 
                                 const date = (filters.dates.upcoming && filters.dates.overdue) ? true : (filters.dates.upcoming && isUpcoming) || (filters.dates.overdue && isOverdue);
 
-                                return status && date;
+                                // todo.task
+                                const title = todo.task.includes(filters.task);
+
+                                return status && date && title && priority;
                             })
                             .map((todo, index)=>(
                             <tr key={index}>
@@ -168,7 +226,8 @@ function TodoTable({theme, todos, setTodos}){
                                 <td>{todo.description}</td>
                                 <td>{new Date(todo.dueDate).toLocaleString().slice(0,-3)}</td>
                                 <td>{new Date(todo.date).toLocaleString().slice(0,-3)}</td>
-                                <td>{<Status status={todo.status}/>}</td>
+                                <td>{<Status svg={svgs.priority[todo.priority]} msg={priorityMap[todo.priority]} />}</td>
+                                <td>{<Status svg={todo.status ? svgs.status.done : svgs.status.notdone} msg={todo.status ? "Done" : "Not done"}/>}</td>
                                 <td className="controls">
                                     {(!todo.status) ? <button style={{backgroundColor: theme.buttons.add}} onClick={()=>setDone(index)} className = "done">Done!</button> : ''}
                                     <button style={{backgroundColor: theme.buttons.edit}} onClick={()=>handleEdit(index)} className="edit">Edit</button>
